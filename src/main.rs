@@ -31,7 +31,11 @@ pub struct Bar(Vec<Widget>);
 
 impl fmt::Display for Bar {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let bar: String = self.0.iter().map(|x| " +@fg=4;|+@fg=0; ".to_string() + &x.to_string()).collect();
+        let bar: String = self
+            .0
+            .iter()
+            .map(|x| " +@fg=4;|+@fg=0; ".to_string() + &x.to_string())
+            .collect();
 
         write!(f, "{}", bar)
     }
@@ -118,7 +122,7 @@ pub fn volume() -> Widget {
             .stdout,
     )
     .unwrap()
-        == "true";
+        == "true\n";
 
     Widget {
         name: "VOL",
