@@ -1,0 +1,5 @@
+#+title: Rustbar: The Second One (RBTSO)
+
+This is a reimplementation of my previous rustbar project.
+While rustbar was intended for use in sway/i3, rbtso is intended for use with [[https://github.com/conformal/spectrwm][Spectrwm]].
+However, RBTSO was written such that it may be easier to use with other bar programs.
