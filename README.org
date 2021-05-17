@@ -42,7 +42,6 @@ The following is a part of a .el file which is run by a cronjob and the result i
   (elfeed)
   (elfeed-update)
   (setq output (elfeed-search--count-unread))
-  (split-string output "/")
   (princ (car (split-string output "/")))
 #+end_src
 
