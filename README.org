@@ -46,7 +46,7 @@ The following is a part of a .el file which is run by a cronjob and the result i
   (princ (car (split-string output "/")))
 #+end_src
 
-This is not the intended use for ~(elfeed-update)~, so it does not really work and I am trying to find a more elegant way to accomplish this
+This is not the intended use for ~(elfeed-search--count-unread)~, so it does not really work and I am trying to find a more elegant way to accomplish this
 
 * Volume
 The volume widget assumes pulseaudio and pamixer are installed.
