@@ -64,11 +64,18 @@ pub fn battery() -> Widget {
 }
 
 pub fn tasks() -> Widget {
-    let tasks = read_num_from_file("/home/ethan/.local/share/tasks");
+    let task = String::from_utf8(Command::new("task")
+				 .arg("rc.verbose:")
+				 .arg("limit:1")
+				 .arg("statbar")
+				 .output()
+				 .expect("failed to get task")
+				 .stdout,
+    ).unwrap();
     Widget {
         name: "TODO",
-        data: tasks.to_string(),
-        color: if tasks == 0 { GREY } else { WHITE },
+        color: if &task == "" { GREY } else { WHITE },
+        data: if &task == "" { "none".to_string() } else { task },
     }
 }
 
@@ -117,7 +124,7 @@ pub fn music() -> Widget {
     let music_info = String::from_utf8_lossy(
         &Command::new("cmus-remote")
             .arg("-C")
-            .arg("format_print '%t'")
+            .arg("format_print '%a - %t'")
             .output()
             .expect("failed to get music_info")
             .stdout,
@@ -127,7 +134,7 @@ pub fn music() -> Widget {
     Widget {
         name: "MUS",
         color: if music_info.is_empty() { GREY } else { WHITE },
-        data: music_info,
+        data: if music_info.is_empty() { "none".to_string() } else { music_info },
     }
 }
 
