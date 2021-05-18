@@ -1,6 +1,6 @@
 use std::fmt;
 use std::fs::File;
-use std::io::{BufReader, BufRead};
+use std::io::{BufRead, BufReader};
 use std::process::Command;
 
 // constants as defined in spectrwm config
@@ -64,18 +64,24 @@ pub fn battery() -> Widget {
 }
 
 pub fn tasks() -> Widget {
-    let task = String::from_utf8(Command::new("task")
-				 .arg("rc.verbose:")
-				 .arg("limit:1")
-				 .arg("statbar")
-				 .output()
-				 .expect("failed to get task")
-				 .stdout,
-    ).unwrap();
+    let task = String::from_utf8(
+        Command::new("task")
+            .arg("rc.verbose:")
+            .arg("limit:1")
+            .arg("statbar")
+            .output()
+            .expect("failed to get task")
+            .stdout,
+    )
+	.unwrap();
     Widget {
         name: "TODO",
-        color: if &task == "" { GREY } else { WHITE },
-        data: if &task == "" { "none".to_string() } else { task },
+        color: if task.is_empty() { GREY } else { WHITE },
+        data: if task.is_empty() {
+            "none".to_string()
+        } else {
+            task.trim().to_string()
+        },
     }
 }
 
@@ -96,12 +102,12 @@ pub fn volume() -> Widget {
             .expect("failed to get volume")
             .stdout,
     )
-    .unwrap()
-    .chars()
-    .filter(|c| c.is_digit(10))
-    .collect::<String>()
-    .parse::<u32>()
-    .unwrap();
+	.unwrap()
+	.chars()
+	.filter(|c| c.is_digit(10))
+	.collect::<String>()
+	.parse::<u32>()
+	.unwrap();
 
     let muted: bool = String::from_utf8(
         Command::new("pamixer")
@@ -110,7 +116,7 @@ pub fn volume() -> Widget {
             .expect("failed to get mute status")
             .stdout,
     )
-    .unwrap()
+	.unwrap()
         == "true\n";
 
     Widget {
@@ -129,12 +135,16 @@ pub fn music() -> Widget {
             .expect("failed to get music_info")
             .stdout,
     )
-    .replace("\n", "");
+	.replace("\n", "");
 
     Widget {
         name: "MUS",
         color: if music_info.is_empty() { GREY } else { WHITE },
-        data: if music_info.is_empty() { "none".to_string() } else { music_info },
+        data: if music_info.is_empty() {
+            "none".to_string()
+        } else {
+            music_info
+        },
     }
 }
 
