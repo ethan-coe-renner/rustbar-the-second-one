@@ -25,7 +25,7 @@ In order to use this, the following must be in the .taskrc file
 
 #+begin_src conf
   report.statbar.description = Displays pending tasks in order of descending urgency
-  report.statbar.columns = description
+  report.statbar.columns = description.truncated_count
   report.statbar.labels = Description
   report.statbar.filter = status:pending
   report.statbar.sort = urgency-
