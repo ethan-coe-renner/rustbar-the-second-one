@@ -9,7 +9,8 @@ fn main() {
             rbtso::updates(),
             rbtso::tasks(),
             // rbtso::news(),
-            rbtso::volume(),
+	    rbtso::network(),
+	    rbtso::volume(),
             rbtso::battery(),
         ]);
         println!("{}", bar);

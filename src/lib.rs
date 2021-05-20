@@ -148,6 +148,33 @@ pub fn music() -> Widget {
     }
 }
 
+
+pub fn network() -> Widget {
+    let net_name = String::from_utf8_lossy(
+        &Command::new("nmcli")
+            .arg("-t")
+            .arg("-f")
+            .arg("NAME")
+            .arg("c")
+            .arg("show")
+            .arg("--active")
+            .output()
+            .expect("failed to get network information")
+            .stdout,
+    )
+	.replace("\n", "");
+
+    Widget {
+        name: "NET",
+        color: if net_name.is_empty() { GREY } else { WHITE },
+        data: if net_name.is_empty() {
+            "none".to_string()
+        } else {
+            net_name
+        },
+    }
+}
+
 fn read_num_from_file(filepath: &'static str) -> u32 {
     let file = match File::open(&filepath) {
         Ok(file) => file,

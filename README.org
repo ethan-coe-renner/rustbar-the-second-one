@@ -47,6 +47,9 @@ The following is a part of a .el file which is run by a cronjob and the result i
 
 This is not the intended use for ~(elfeed-search--count-unread)~, so it does not really work and I am trying to find a more elegant way to accomplish this
 
+* Network
+The network widget uses nmcli to get the current active connection.
+
 * Volume
 The volume widget assumes pulseaudio and pamixer are installed.
 
