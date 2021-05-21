@@ -9,6 +9,11 @@ const GREY: u8 = 4;
 const RED: u8 = 3;
 const ORANGE: u8 = 2;
 
+// file locations
+const BAT1: &'static str = "/sys/class/power_supply/BAT0/capacity";
+const BAT2: &'static str = "/sys/class/power_supply/BAT1/capacity";
+const UPDATECACHE: &'static str = "/home/ethan/.cache/updates";
+
 pub struct Bar(pub Vec<Widget>);
 
 impl fmt::Display for Bar {
@@ -76,8 +81,8 @@ pub fn news() -> Widget {
 }
 
 pub fn battery() -> Widget {
-    let bat0percent = read_num_from_file("/sys/class/power_supply/BAT0/capacity");
-    let bat1percent = read_num_from_file("/sys/class/power_supply/BAT1/capacity");
+    let bat0percent = read_num_from_file(BAT1);
+    let bat1percent = read_num_from_file(BAT2);
 
     Widget {
         name: "BAT",
@@ -113,7 +118,7 @@ pub fn tasks() -> Widget {
 }
 
 pub fn updates() -> Widget {
-    let updates = read_num_from_file("/home/ethan/.local/share/updates");
+    let updates = read_num_from_file(UPDATECACHE);
     Widget {
         name: "UPD",
         data: updates.to_string(),
