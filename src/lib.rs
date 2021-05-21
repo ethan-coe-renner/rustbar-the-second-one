@@ -40,11 +40,38 @@ impl fmt::Display for Widget {
 }
 
 pub fn news() -> Widget {
-    let unread = read_num_from_file("/home/ethan/.local/share/newsunread");
+    let unread = String::from_utf8(
+        Command::new("newsboat")
+            .arg("-x")
+            .arg("print-unread")
+            .output()
+            .expect("failed to get unread articles")
+            .stdout,
+    )
+	.unwrap();
+
+    let open: bool = unread.contains("Error");
+
+    let num = if !open {
+	unread.chars()
+	    .filter(|c| c.is_digit(10))
+	    .collect::<String>()
+	    .parse::<u32>()
+	    .unwrap()
+    }
+    else {
+	0
+    };
+
     Widget {
-        name: "NEWS",
-        data: unread.to_string(),
-        color: if unread == 0 { GREY } else { WHITE },
+	name: "NEWS",
+	data: if open {
+	    "open".to_string()
+	}
+	else {
+	    num.to_string()
+	},
+	color: if num == 0 { GREY } else { WHITE }, // grey if 0 or newsboat is open
     }
 }
 

@@ -34,18 +34,10 @@ In order to use this, the following must be in the .taskrc file
 This is used by rbtso, which runs ~task rc.verbose: limit:1 statbar~ to get the most urgent task
 
 * News
-Currently I use [[https://github.com/skeeto/elfeed][elfeed]] to manage my rss feeds. The goal is to have a way to display the number of unread articles in the status bar, however it does not really work.
+I use [[https://newsboat.org/][newsboat]] for my rss feed reading. Rbtso runs ~newsboat -x print-unread~ to display the number of unread articles.
+I also run ~newsboat -x reload~ on a cronjob to update my rss feeds.
 
-The following is a part of a .el file which is run by a cronjob and the result is put in ~/.local/share/newsunread, which is read to display in the status bar.
-
-#+begin_src emacs-lisp
-  (elfeed)
-  (elfeed-update)
-  (setq output (elfeed-search--count-unread))
-  (princ (car (split-string output "/")))
-#+end_src
-
-This is not the intended use for ~(elfeed-search--count-unread)~, so it does not really work and I am trying to find a more elegant way to accomplish this
+Due to the fact that newsboat cannot run multiple instances, Rbtso displays "open" in grey for this widget when newsboat is open.
 
 * Network
 The network widget uses nmcli to get the current active connection.
