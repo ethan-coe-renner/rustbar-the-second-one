@@ -2,8 +2,7 @@
 
 This is a reimplementation of my previous rustbar project.
 While rustbar was intended for use in sway/i3, rbtso is intended for use with [[https://github.com/conformal/spectrwm][Spectrwm]].
-This is done by setting the ~bar_action~ setting in ~spectrwm.conf~ to the rbtso binary
-However, RBTSO was written such that it may be easier to use with other bar programs.
+This is done by setting the ~bar_action~ setting in ~spectrwm.conf~ to the rbtso binary.
 
 * Music
 I use [[https://cmus.github.io/][cmus]] for my music listening. I also use [[https://github.com/cmus/cmus/wiki/detachable-cmus][this wiki page]] to use cmus detached.
