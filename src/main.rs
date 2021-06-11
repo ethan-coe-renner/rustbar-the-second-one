@@ -9,6 +9,7 @@ fn main() {
             rbtso::updates(),
             rbtso::tasks(),
             rbtso::news(),
+            rbtso::timetrack(),
 	    rbtso::network(),
 	    rbtso::volume(),
             rbtso::battery(),

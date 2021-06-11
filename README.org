@@ -5,9 +5,7 @@ While rustbar was intended for use in sway/i3, rbtso is intended for use with [[
 This is done by setting the ~bar_action~ setting in ~spectrwm.conf~ to the rbtso binary.
 
 * Music
-I use [[https://cmus.github.io/][cmus]] for my music listening. I also use [[https://github.com/cmus/cmus/wiki/detachable-cmus][this wiki page]] to use cmus detached.
-Though this is not necessary for rbtso to work, it is a very nice solution.
-Rbtso simply makes use of =cmus-remote= to get the current song and artist.
+Displays the currently running song with mpc.
 
 * Updates
 I use Arch linux and the =checkupdates= script which is included with [[https://archlinux.org/packages/community/x86_64/pacman-contrib/][pacman-contrib]] to check the number of updates available.

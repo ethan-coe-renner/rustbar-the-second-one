@@ -117,6 +117,20 @@ pub fn tasks() -> Widget {
     }
 }
 
+pub fn timetrack() -> Widget {
+    let mut timer =
+        Command::new("timew")
+        .output()
+        .expect("failed to get timer")
+        .stdout.lines().next().unwrap().unwrap();
+    timer = timer.split_whitespace().nth(1).unwrap().to_string();
+    Widget {
+        name: "TIME",
+        color: WHITE,
+        data: timer.to_string()
+    }
+}
+
 pub fn updates() -> Widget {
     let updates = read_num_from_file(UPDATECACHE);
     Widget {
@@ -159,24 +173,23 @@ pub fn volume() -> Widget {
 }
 
 pub fn music() -> Widget {
-    let music_info = String::from_utf8_lossy(
-        &Command::new("cmus-remote")
-            .arg("-C")
-            .arg("format_print '%a - %t'")
-            .output()
-            .expect("failed to get music_info")
-            .stdout,
-    )
-	.replace("\n", "");
+    let music_info = 
+        Command::new("mpc")
+        .arg("status")
+        .output()
+        .expect("failed to get music_info")
+        .stdout.lines().nth(0).unwrap().unwrap();
 
+    let playing: bool = music_info.contains("volume: n/a");
+    
     Widget {
-        name: "MUS",
-        color: if music_info.is_empty() { GREY } else { WHITE },
-        data: if music_info.is_empty() {
-            "none".to_string()
-        } else {
-            music_info
-        },
+	name: "MUS",
+	color: if playing { GREY } else { WHITE },
+	data: if playing {
+	    "none".to_string()
+	} else {
+	    music_info
+	},
     }
 }
 
