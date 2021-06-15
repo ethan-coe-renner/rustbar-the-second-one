@@ -5,17 +5,16 @@ fn main() {
 
     loop {
         let bar = rbtso::Bar(vec![
-            //rbtso::music(),
+            rbtso::music(),
             rbtso::updates(),
             rbtso::tasks(),
             rbtso::news(),
-            //rbtso::timetrack(),
-	    rbtso::network(),
-	    rbtso::volume(),
+            rbtso::timetrack(),
+            rbtso::network(),
+            rbtso::volume(),
             rbtso::battery(),
         ]);
         println!("{}", bar);
         thread::sleep(delay);
     }
 }
-
