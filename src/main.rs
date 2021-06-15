@@ -5,11 +5,11 @@ fn main() {
 
     loop {
         let bar = rbtso::Bar(vec![
-            rbtso::music(),
+            //rbtso::music(),
             rbtso::updates(),
             rbtso::tasks(),
             rbtso::news(),
-            rbtso::timetrack(),
+            //rbtso::timetrack(),
 	    rbtso::network(),
 	    rbtso::volume(),
             rbtso::battery(),
