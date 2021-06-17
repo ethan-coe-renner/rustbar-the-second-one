@@ -10,9 +10,11 @@ const RED: u8 = 3;
 const ORANGE: u8 = 2;
 
 // file locations
-const BAT1: &'static str = "/sys/class/power_supply/BAT0/capacity";
-const BAT2: &'static str = "/sys/class/power_supply/BAT1/capacity";
-const UPDATECACHE: &'static str = "/home/ethan/.cache/updates";
+const BAT1: &str = "/sys/class/power_supply/BAT0/capacity";
+const BAT2: &str = "/sys/class/power_supply/BAT1/capacity";
+const UPDATECACHE: &str = "/home/ethan/.cache/updates";
+
+const ERROR: String = "none".to_string();
 
 pub struct Bar(pub Vec<Widget>);
 
@@ -53,30 +55,29 @@ pub fn news() -> Widget {
             .expect("failed to get unread articles")
             .stdout,
     )
-	.unwrap();
+    .unwrap();
 
     let open: bool = unread.contains("Error");
 
     let num = if !open {
-	unread.chars()
-	    .filter(|c| c.is_digit(10))
-	    .collect::<String>()
-	    .parse::<u32>()
-	    .unwrap()
-    }
-    else {
-	0
+        unread
+            .chars()
+            .filter(|c| c.is_digit(10))
+            .collect::<String>()
+            .parse::<u32>()
+            .unwrap()
+    } else {
+        0
     };
 
     Widget {
-	name: "NEWS",
-	data: if open {
-	    "open".to_string()
-	}
-	else {
-	    num.to_string()
-	},
-	color: if num == 0 { GREY } else { WHITE }, // grey if 0 or newsboat is open
+        name: "NEWS",
+        data: if open {
+            "open".to_string()
+        } else {
+            num.to_string()
+        },
+        color: if num == 0 { GREY } else { WHITE }, // grey if 0 or newsboat is open
     }
 }
 
@@ -105,7 +106,7 @@ pub fn tasks() -> Widget {
             .expect("failed to get task")
             .stdout,
     )
-	.unwrap();
+    .unwrap();
     Widget {
         name: "TODO",
         color: if task.is_empty() { GREY } else { WHITE },
@@ -118,16 +119,19 @@ pub fn tasks() -> Widget {
 }
 
 pub fn timetrack() -> Widget {
-    let mut timer =
-        Command::new("timew")
+    let mut timer = Command::new("timew")
         .output()
         .expect("failed to get timer")
-        .stdout.lines().next().unwrap().unwrap();
+        .stdout
+        .lines()
+        .next()
+        .unwrap()
+        .unwrap();
     timer = timer.split_whitespace().nth(1).unwrap().to_string();
     Widget {
         name: "TIME",
         color: WHITE,
-        data: timer.to_string()
+        data: timer.to_string(),
     }
 }
 
@@ -148,12 +152,12 @@ pub fn volume() -> Widget {
             .expect("failed to get volume")
             .stdout,
     )
-	.unwrap()
-	.chars()
-	.filter(|c| c.is_digit(10))
-	.collect::<String>()
-	.parse::<u32>()
-	.unwrap();
+    .unwrap()
+    .chars()
+    .filter(|c| c.is_digit(10))
+    .collect::<String>()
+    .parse::<u32>()
+    .unwrap();
 
     let muted: bool = String::from_utf8(
         Command::new("pamixer")
@@ -162,7 +166,7 @@ pub fn volume() -> Widget {
             .expect("failed to get mute status")
             .stdout,
     )
-	.unwrap()
+    .unwrap()
         == "true\n";
 
     Widget {
@@ -173,26 +177,28 @@ pub fn volume() -> Widget {
 }
 
 pub fn music() -> Widget {
-    let music_info = 
-        Command::new("mpc")
+    let music_info = Command::new("mpc")
         .arg("status")
         .output()
         .expect("failed to get music_info")
-        .stdout.lines().nth(0).unwrap().unwrap();
+        .stdout
+        .lines()
+        .nth(0)
+        .unwrap()
+        .unwrap_or(ERROR);
 
     let playing: bool = music_info.contains("volume: n/a");
-    
+
     Widget {
-	name: "MUS",
-	color: if playing { GREY } else { WHITE },
-	data: if playing {
-	    "none".to_string()
-	} else {
-	    music_info
-	},
+        name: "MUS",
+        color: if playing { GREY } else { WHITE },
+        data: if playing {
+            "none".to_string()
+        } else {
+            music_info
+        },
     }
 }
-
 
 pub fn network() -> Widget {
     let net_name = String::from_utf8_lossy(
@@ -207,7 +213,7 @@ pub fn network() -> Widget {
             .expect("failed to get network information")
             .stdout,
     )
-	.replace("\n", "");
+    .replace("\n", "");
 
     Widget {
         name: "NET",
