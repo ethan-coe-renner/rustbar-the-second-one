@@ -14,7 +14,7 @@ const BAT1: &str = "/sys/class/power_supply/BAT0/capacity";
 const BAT2: &str = "/sys/class/power_supply/BAT1/capacity";
 const UPDATECACHE: &str = "/home/ethan/.cache/updates";
 
-const ERROR: String = "none".to_string();
+const ERROR: &str = "none";
 
 pub struct Bar(pub Vec<Widget>);
 
@@ -185,7 +185,7 @@ pub fn music() -> Widget {
         .lines()
         .nth(0)
         .unwrap()
-        .unwrap_or(ERROR);
+        .unwrap_or(ERROR.to_string());
 
     let playing: bool = music_info.contains("volume: n/a");
 
