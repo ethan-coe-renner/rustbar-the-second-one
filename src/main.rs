@@ -6,10 +6,10 @@ fn main() {
     loop {
         let bar = rbtso::Bar(vec![
             rbtso::music(),
-            rbtso::updates(),
+            // rbtso::updates(),
             rbtso::tasks(),
-            rbtso::news(),
-            rbtso::timetrack(),
+            // rbtso::news(),
+            // rbtso::timetrack(),
             rbtso::network(),
             rbtso::volume(),
             rbtso::battery(),
