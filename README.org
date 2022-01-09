@@ -16,6 +16,8 @@ To use this with rbtso, put this line into the crontab with a suitable delay
 I also run this command when I update my system, that way the statusbar immediately updates to 0 after updating.
 I have it set up as a keybinding in spectrwm, however a shell alias would work just fine
 
+Note: I no longer use this, as I am now on NixOS, but I've left the code in the repository.
+
 * Tasks
 Rbtso uses [[https://taskwarrior.org/][taskwarrior]] to display the most urgent task in the status bar.
 
@@ -33,11 +35,16 @@ Obviously this can be modified to display the particular information necessary.
 
 This is used by rbtso, which runs ~task rc.verbose: limit:1 statbar~ to get the most urgent task
 
+Note: I no longer use this, but I've left the code in the repository.
+
 * News
 I use [[https://newsboat.org/][newsboat]] for my rss feed reading. Rbtso runs ~newsboat -x print-unread~ to display the number of unread articles.
 I also run ~newsboat -x reload~ on a cronjob to update my rss feeds.
 
 Due to the fact that newsboat cannot run multiple instances, Rbtso displays "open" in grey for this widget when newsboat is open.
+
+
+Note: I no longer use this, as I now use elfeed for my rss reading, but I have again left the code in the repository.
 
 * Network
 The network widget uses nmcli to get the current active connection.
